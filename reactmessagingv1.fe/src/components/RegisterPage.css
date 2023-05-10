@@ -1,0 +1,82 @@
+.register-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.register-container {
+    width: 30vw;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.register-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.register-box{
+    padding: 0rem 1.5rem 0rem 0rem;
+}
+
+.register-box input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.password-strength {
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.register-box button {
+    width: 30vw;
+    padding: 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    .register-form button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+.error-message {
+    color: red;
+    margin-bottom: 10px;
+}
+
+.success-message {
+    color: green;
+    margin-bottom: 10px;
+    animation: fadeout 1s forwards;
+    animation-delay: 1s;
+}
+
+@keyframes fadeout {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.signup-container {
+    margin-top: 10px;
+}
+
+    .signup-container a {
+        color: #007bff;
+        text-decoration: none;
+    }
