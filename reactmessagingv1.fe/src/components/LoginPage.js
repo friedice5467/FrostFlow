@@ -26,7 +26,8 @@ function LoginPage() {
 
             const data = response.data;
             localStorage.setItem('token', data.token);
-            setCurrentUser({ email });
+            const decodedToken = parseJwt(data.token);
+            setCurrentUser({ email: decodedToken.sub }); // JWT standard claim for subject, which you've used for email
             navigate('/dashboard');
         } catch (err) {
             // If we get here, the request failed

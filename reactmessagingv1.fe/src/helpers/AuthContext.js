@@ -13,6 +13,14 @@ export function AuthProvider({ children }) {
     const navigate = useNavigate();
 
     const storedToken = localStorage.getItem('token');
+    let initialUser = null;
+
+    if (storedToken) {
+        const decodedToken = parseJwt(storedToken);
+        initialUser = { email: decodedToken.sub };
+    }
+
+    const [currentUser, setCurrentUser] = useState(initialUser);
 
     const login = () => {
         //does nothing
@@ -38,4 +46,13 @@ export function AuthProvider({ children }) {
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
+
+export function parseJwt(token) {
+    try {
+        return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+        return null;
+    }
+}
+
 
