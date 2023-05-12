@@ -1,20 +1,47 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using System.Collections.Concurrent;
 
 [Authorize]
 public class ChatHub : Hub
 {
     public async Task SendMessageToUser(string userId, string message)
     {
-        var currentUserId = Context.UserIdentifier;
-
-        if (currentUserId == userId)
+        try
         {
-            // The user cannot send a message to themselves.
-            return;
-        }
+            var currentUserId = Context.UserIdentifier;
 
-        await Clients.User(userId).SendAsync("ReceiveMessage", message);
+            if (currentUserId == userId)
+            {
+                return;
+            }
+            var getUser = Clients.User(userId);
+            await Clients.User(userId).SendAsync("ReceiveMessage", message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        
+    }
+
+    public async Task SendChatRequest(string userId)
+    {
+        try
+        {
+            var currentUserId = Context.UserIdentifier;
+
+            if (currentUserId == userId)
+            {
+                return;
+            }
+
+            await Clients.User(userId).SendAsync("ReceiveChatRequest", currentUserId);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     public async Task SendMessageToGroup(string groupName, string message)

@@ -1,5 +1,6 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 
 const AuthContext = createContext();
 
@@ -8,26 +9,13 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-    const [currentUser, setCurrentUser] = useState(null);
-    const [loading, setLoading] = useState(false); // Set loading to false by default
-    const navigate = useNavigate();
-
     const storedToken = localStorage.getItem('token');
-    let initialUser = null;
-
-    if (storedToken) {
-        const decodedToken = parseJwt(storedToken);
-        initialUser = { email: decodedToken.sub };
-    }
-
-    const [currentUser, setCurrentUser] = useState(initialUser);
-
-    const login = () => {
-        //does nothing
-    };
+    const initialCurrentUser = storedToken ? jwtDecode(storedToken) : null;
+    const { sub: userId, name: email } = initialCurrentUser;
+    const navigate = useNavigate();
+    const [currentUser, setCurrentUser] = useState({ userId, email });
 
     const logout = () => {
-        setCurrentUser(null);
         localStorage.removeItem('token');
         navigate('/login');
     };
@@ -36,23 +24,10 @@ export function AuthProvider({ children }) {
         currentUser,
         setCurrentUser,
         token: storedToken,
-        login,
         logout,
     };
 
-    if (loading) {
-        return <div>Loading...</div>; // Or replace this with a loading spinner or similar
-    }
-
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-
-export function parseJwt(token) {
-    try {
-        return JSON.parse(atob(token.split('.')[1]));
-    } catch (e) {
-        return null;
-    }
 }
 
 

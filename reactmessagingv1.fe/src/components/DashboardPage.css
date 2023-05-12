@@ -58,11 +58,10 @@
 }
 
 .messages {
-    width: 100%;
-    height: calc(100vh - 128px);
+    flex-grow: 1;
     overflow-y: auto;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
 }
 
 .message {
@@ -90,7 +89,7 @@
     flex-direction: column;
 }
 
-.message-text {
+.chat-message-text {
     font-size: 16px;
     font-weight: 500;
 }
@@ -109,7 +108,7 @@
     color: #999;
 }
 
-.message-input {
+.chat-input {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -117,7 +116,7 @@
     margin-top: 16px;
 }
 
-    .message-input input {
+    .chat-input input {
         width: 90%;
         padding: 8px;
         border: 1px solid #ddd;
@@ -142,3 +141,9 @@
     .send-message-btn:focus {
         outline: none;
     }
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
