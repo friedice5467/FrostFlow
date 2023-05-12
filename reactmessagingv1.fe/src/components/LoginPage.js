@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../helpers/AuthContext';
 import api from '../helpers/api';
 import './LoginPage.css';
+import jwtDecode from 'jwt-decode';
 
 function LoginPage() {
     const [email, setEmail] = useState('');
@@ -11,7 +12,7 @@ function LoginPage() {
     const [error, setError] = useState('');
 
     const { setCurrentUser } = useAuth();
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,13 +26,16 @@ function LoginPage() {
             });
 
             const data = response.data;
+            const decodedToken = jwtDecode(data.token);
+            const { sub: userId, name: userEmail } = decodedToken;
             localStorage.setItem('token', data.token);
-            const decodedToken = parseJwt(data.token);
-            setCurrentUser({ email: decodedToken.sub }); // JWT standard claim for subject, which you've used for email
+            setCurrentUser({ userId, email: userEmail });
             navigate('/dashboard');
         } catch (err) {
             // If we get here, the request failed
+            console.log(err);
             setError('Invalid email or password');
+        } finally {
             setLoading(false);
         }
     };

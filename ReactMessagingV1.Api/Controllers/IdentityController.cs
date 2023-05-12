@@ -35,8 +35,9 @@ namespace TestReactAuth.Api.Controllers
             {
                 var claims = new[]
                 {
-                    new Claim(JwtRegisteredClaimNames.Sub, model.Email),
+                    new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(JwtRegisteredClaimNames.Name, user.UserName),
                 };
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
@@ -84,5 +85,23 @@ namespace TestReactAuth.Api.Controllers
             }
             return BadRequest("Invalid model state");
         }
+
+        [Authorize]
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchUsers(string query)
+        {
+            var users = _userManager.Users
+                .Where(u => u.UserName.ToLower().Contains(query.ToLower()))
+                .Select(u => new { u.UserName, u.Id })
+                .ToList();
+
+            if (users.Any())
+            {
+                return Ok(users);
+            }
+
+            return NotFound("No users found");
+        }
+
     }
 }
