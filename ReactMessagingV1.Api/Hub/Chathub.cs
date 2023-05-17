@@ -1,42 +1,43 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
-using System.Collections.Concurrent;
+using System.Globalization;
 
 [Authorize]
 public class ChatHub : Hub
 {
-    public async Task SendMessageToUser(string userId, string message)
+    public async Task SendMessageToUser(string receiverUserId, string senderUserName, string message)
     {
         try
         {
-            var currentUserId = Context.UserIdentifier;
+            var senderUserId = Context.UserIdentifier;
 
-            if (currentUserId == userId)
+            if (senderUserId == receiverUserId)
             {
                 return;
             }
-            var getUser = Clients.User(userId);
-            await Clients.User(userId).SendAsync("ReceiveMessage", message);
+
+            var currentTime = DateTime.Now.ToString("s", CultureInfo.InvariantCulture);
+
+            await Clients.User(receiverUserId).SendAsync("ReceiveMessage", senderUserId, message, senderUserName, currentTime);
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
         }
-        
     }
 
-    public async Task SendChatRequest(string userId)
+    public async Task SendChatRequest(string recieverUserId, string senderUserName)
     {
         try
         {
             var currentUserId = Context.UserIdentifier;
 
-            if (currentUserId == userId)
+            if (currentUserId == recieverUserId)
             {
                 return;
             }
 
-            await Clients.User(userId).SendAsync("ReceiveChatRequest", currentUserId);
+            await Clients.User(recieverUserId).SendAsync("ReceiveChatRequest", currentUserId, senderUserName);
         }
         catch(Exception ex)
         {

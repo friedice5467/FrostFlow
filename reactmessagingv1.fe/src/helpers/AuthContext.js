@@ -11,14 +11,20 @@ export function useAuth() {
 export function AuthProvider({ children }) {
     const storedToken = localStorage.getItem('token');
     const initialCurrentUser = storedToken ? jwtDecode(storedToken) : null;
-    const { sub: userId, name: email } = initialCurrentUser;
     const navigate = useNavigate();
-    const [currentUser, setCurrentUser] = useState({ userId, email });
+    const [currentUser, setCurrentUser] = useState(initialCurrentUser ? { userId: initialCurrentUser.sub, email: initialCurrentUser.name } : null);
 
     const logout = () => {
         localStorage.removeItem('token');
+        setCurrentUser(null);
         navigate('/login');
     };
+
+    useEffect(() => {
+        if (initialCurrentUser && initialCurrentUser.exp && Date.now() >= initialCurrentUser.exp * 1000) {
+            logout();
+        }
+    }, [initialCurrentUser]);
 
     const value = {
         currentUser,
@@ -29,5 +35,6 @@ export function AuthProvider({ children }) {
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
+
 
 

@@ -11,19 +11,19 @@ const UserSearch = ({ closePopup, startChat, activeChats }) => {
         setUsers(response.data);
     };
 
-    const handleCheckboxChange = (userId, isChecked) => {
+    const handleCheckboxChange = (user, isChecked) => {
         if (isChecked) {
-            setSelectedUsers([...selectedUsers, userId]);
+            setSelectedUsers([...selectedUsers, user]);
         } else {
-            setSelectedUsers(selectedUsers.filter(id => id !== userId));
+            setSelectedUsers(selectedUsers.filter(selectedUser => selectedUser.id !== user.id));
         }
     };
 
-    const startPrivateChat = (userId) => {
-        if (!activeChats[userId]) {
-            startChat(userId);
+    const startPrivateChat = (user) => {
+        if (!activeChats[user.id]) {
+            startChat(user);
         } else {
-            console.log(`Chat with user ${userId} already exists`);
+            console.log(`Chat with user ${user.userName} already exists`);
         }
     };
 
@@ -39,7 +39,7 @@ const UserSearch = ({ closePopup, startChat, activeChats }) => {
             <div style={{ maxHeight: '200px', overflowY: 'scroll' }}>
                 {users.map(user => (
                     <div key={user.id}>
-                        <input type="checkbox" onChange={(e) => handleCheckboxChange(user.id, e.target.checked)} />
+                        <input type="checkbox" onChange={(e) => handleCheckboxChange(user, e.target.checked)} />
                         {user.userName}
                     </div>
                 ))}

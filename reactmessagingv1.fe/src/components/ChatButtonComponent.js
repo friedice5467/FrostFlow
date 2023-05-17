@@ -1,9 +1,9 @@
 import React from 'react';
 
-const ChatButton = ({ userId, onClick }) => {
+const ChatButton = ({ user, onClick }) => {
     return (
         <button className="chat-btn" onClick={onClick}>
-            Chat with {userId}
+            Chat with {user.userName}
         </button>
     );
 };
