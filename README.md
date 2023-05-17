@@ -38,12 +38,6 @@ This project is licensed under the APACHE license. See the [LICENSE.txt](LICENSE
 
 ## Contribution
 
-Contributions are not accepted for this project.
-
-## Acknowledgements
-
-We would like to acknowledge the support and resources that contributed to the development of this application.
-
-Certainly! Here's a revised version of the last paragraph:
+Contributions are welcome.
 
 *Note: This application is a learning project aimed at exploring the implementation of real-time messaging functionality. While it may not have the full feature set of production-grade messaging applications, it serves as a practical introduction to building real-time communication systems.*
