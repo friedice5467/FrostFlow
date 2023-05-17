@@ -1,11 +1,11 @@
 # React Messaging Application
 
 ## Overview
-This application is a comprehensive solution for real-time user communication. It is built with a React frontend and an ASP.NET Core backend, providing a robust architecture that ensures efficient performance and scalability. The application leverages ASP.NET Identity for user authentication, providing secure login and registration over HTTPS.
+This application is a comprehensive solution for real-time user communication. It is built with a React frontend and an ASP.NET Core backend, providing a robust architecture that ensures efficient performance and scalability. The application leverages ASP.NET Identity and JWT (JSON Web Tokens) for user authentication and authorization, providing secure login and registration over HTTPS.
 
 ## Features
 
-- **User Authentication/Authorization**: Secure user authentication is implemented using ASP.NET Identity. Users can register and login to access the application.
+- **User Authentication/Authorization**: Secure user authentication and authorization are implemented using ASP.NET Identity and JWT tokens. Users can register, login, and access the application with secure token-based authentication.
 
 - **Direct Messaging**: The application enables direct, real-time messaging between users. This allows for instant communication, improving the efficiency and effectiveness of user interactions.
 
@@ -14,7 +14,7 @@ This application is a comprehensive solution for real-time user communication. I
 - **Real-time Updates**: The application uses SignalR for real-time updates. This ensures that messages are received immediately, providing a seamless communication experience.
 
 ## Security
-The application is designed with a focus on security. All data transmission is done over HTTPS, ensuring that user data is always encrypted and secure. In addition, user authentication is handled using ASP.NET Identity, which provides a secure and customizable solution for managing user access.
+The application prioritizes security at its core. All data transmission is done over HTTPS, ensuring that user data is always encrypted and secure. User authentication and authorization are handled using ASP.NET Identity and JWT tokens, providing a secure and robust mechanism for managing user access.
 
 ## Technologies Used
 
@@ -22,6 +22,7 @@ The application is designed with a focus on security. All data transmission is d
 - **ASP.NET Core**: A high-performance, cross-platform framework for building modern, cloud-based, Internet-connected applications.
 - **ASP.NET Identity**: A library that provides APIs for user authentication and identity management.
 - **SignalR**: A library that simplifies adding real-time web functionality to applications.
+- **JWT (JSON Web Tokens)**: A secure method for transferring claims between parties as JSON objects.
 
 ## Getting Started
 
