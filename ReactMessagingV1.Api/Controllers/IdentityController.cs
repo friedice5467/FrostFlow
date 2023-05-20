@@ -90,6 +90,11 @@ namespace TestReactAuth.Api.Controllers
         [HttpGet("search")]
         public async Task<IActionResult> SearchUsers(string query)
         {
+            if (string.IsNullOrEmpty(query))
+            {
+                return BadRequest("Search cannot be empty.");
+            }
+
             var users = _userManager.Users
                 .Where(u => u.UserName.ToLower().Contains(query.ToLower()))
                 .Select(u => new { u.UserName, u.Id })
@@ -97,6 +102,7 @@ namespace TestReactAuth.Api.Controllers
 
             return Ok(users);
         }
+
 
     }
 }

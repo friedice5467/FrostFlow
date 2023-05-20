@@ -30,7 +30,7 @@ const ChatComponent = ({ user, connection }) => {
     }, [connection, user]);
 
     const handleSendMessage = async () => {
-        if (messageInput !== '' && connection) {
+        if (messageInput.trim() !== '' && connection) {
             await connection.invoke('SendMessageToUser', user.id, currentUser.email, messageInput).catch((err) => console.log(err));
 
             const newMessage = {
@@ -39,11 +39,15 @@ const ChatComponent = ({ user, connection }) => {
                 time: new Date().toISOString(),
             };
 
-            setMessages((prevMessages) => [
-                ...prevMessages,
-                newMessage,
-            ]);
+            setMessages((prevMessages) => [...prevMessages, newMessage]);
             setMessageInput('');
+        }
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleSendMessage();
         }
     };
 
@@ -63,8 +67,8 @@ const ChatComponent = ({ user, connection }) => {
                 <h2>{chatTitle}</h2>
             </div>
             <PerfectScrollbar options={{ wheelPropagation: true }} className="flex-grow-1">
-                {messages.slice().reverse().map((message, index) => (
-                    <div key={index} className="d-flex align-items-center mb-3">
+                {messages.map((message, index) => (
+                    <div key={index} className="d-flex align-items-center mb-3 remlimit">
                         <div className="message-avatar bg-primary d-flex align-items-center justify-content-center rounded-circle avatar">
                             {message.user.charAt(0)}
                         </div>
@@ -81,12 +85,13 @@ const ChatComponent = ({ user, connection }) => {
             <div className="chat-input d-flex align-items-center mt-1 mb-3">
                 <input
                     type="text"
-                    className="form-control flex-grow-1"
+                    className="form-control flex-grow-1 rounded-0 rounded-start shadow-none"
                     placeholder="Type a message..."
                     value={messageInput}
                     onChange={(e) => setMessageInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
                 />
-                <button className="btn btn-primary ml-2" onClick={handleSendMessage}>
+                <button className="btn btn-primary ml-2 rounded-0 rounded-end" onClick={handleSendMessage}>
                     Send
                 </button>
             </div>
