@@ -95,12 +95,7 @@ namespace TestReactAuth.Api.Controllers
                 .Select(u => new { u.UserName, u.Id })
                 .ToList();
 
-            if (users.Any())
-            {
-                return Ok(users);
-            }
-
-            return NotFound("No users found");
+            return Ok(users);
         }
 
     }

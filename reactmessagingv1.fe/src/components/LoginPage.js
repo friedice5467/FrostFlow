@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../helpers/AuthContext';
 import api from '../helpers/api';
 import { Container, Form, Button, Alert, Card } from 'react-bootstrap';
+import LoadingModal from './LoadingModal';
 import jwtDecode from 'jwt-decode';
 
 function LoginPage() {
@@ -10,6 +11,7 @@ function LoginPage() {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [showModal, setShowModal] = useState(false);
 
     const { setCurrentUser } = useAuth();
     const navigate = useNavigate();
@@ -20,15 +22,18 @@ function LoginPage() {
         setError('');
 
         try {
+            setShowModal(true); // Show the loading modal
+
             const response = await api.post('identity/login', {
                 Email: email,
                 Password: password,
             });
 
             const data = response.data;
-            const decodedToken = jwtDecode(data.token);
+            const { token } = data;
+            const decodedToken = jwtDecode(token);
             const { sub: userId, name: userEmail } = decodedToken;
-            localStorage.setItem('token', data.token);
+            localStorage.setItem('token', token);
             setCurrentUser({ userId, email: userEmail });
             navigate('/dashboard');
         } catch (err) {
@@ -36,6 +41,7 @@ function LoginPage() {
             setError('Invalid email or password');
         } finally {
             setLoading(false);
+            setShowModal(false); // Close the loading modal
         }
     };
 
@@ -82,6 +88,8 @@ function LoginPage() {
                     </div>
                 </Card.Body>
             </Card>
+
+            {showModal && <LoadingModal />}
         </Container>
     );
 }

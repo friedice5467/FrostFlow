@@ -5,6 +5,7 @@ import ChatComponent from './ChatComponent';
 import ChatButton from './ChatButtonComponent';
 import UserSearch from './UserSearchPopup';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import './DashboardPage.css';
 
 const DashboardPage = () => {
     const { logout, currentUser } = useAuth();
@@ -86,9 +87,9 @@ const DashboardPage = () => {
     };
 
     return (
-        <Container fluid className="dashboard-container h-100">
-            <Row className="w-100">
-                <Col xs={2} className="sidebar bg-dark text-white d-flex flex-column align-items-center justify-content-between">
+        <Container fluid className="dashboard-container h-100 mx-0 px-0 bg-light">
+            <Row className="h-100 mx-0">
+                <Col xs={12} md={2} className="sidebar bg-dark text-white d-flex flex-column align-items-center justify-content-between px-0">
                     <div className="avatar bg-primary d-flex align-items-center justify-content-center rounded-circle">P</div>
                     <div className="chat-buttons w-100">
                         {Object.values(activeChats).map((user) => (
@@ -97,16 +98,23 @@ const DashboardPage = () => {
                     </div>
                     <div className="sidebar-buttons w-100">
                         <Button
-                            variant="dark"
-                            className="sidebar-btn w-100 text-white border-white"
+                            variant="outline-secondary"
+                            className="sidebar-btn w-100 text-white btn-rounded-0"
                             onClick={() => setShowPopup(!showPopup)}
                         >
                             Find Users
                         </Button>
-                        <Button variant="dark" className="sidebar-btn w-100 text-white border-white">
+                        <Button
+                            variant="outline-secondary"
+                            className="sidebar-btn w-100 text-white btn-rounded-0"
+                        >
                             Settings
                         </Button>
-                        <Button variant="dark" className="sidebar-btn w-100 text-white border-white" onClick={logout}>
+                        <Button
+                            variant="outline-secondary"
+                            className="sidebar-btn w-100 text-white btn-rounded-0"
+                            onClick={logout}
+                        >
                             Logout
                         </Button>
                     </div>
@@ -119,7 +127,7 @@ const DashboardPage = () => {
                         />
                     )}
                 </Col>
-                <Col xs={10} className="main d-flex flex-column align-items-center">
+                <Col xs={12} md={10} className="main d-flex flex-column align-items-center justify-content-center">
                     {chatUser && <ChatComponent user={chatUser} connection={connection} />}
                 </Col>
             </Row>

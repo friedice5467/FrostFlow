@@ -11,8 +11,8 @@ const ChatButton = ({ user, onClick }) => {
 
     return (
         <Button
-            className="chat-btn w-100"
-            variant={active ? 'primary' : 'secondary'}
+            className="chat-btn w-100 rounded-0 border-0"
+            variant={active ? 'secondary' : 'outline-secondary'}
             onClick={handleClick}
         >
             Chat with {user.userName}
