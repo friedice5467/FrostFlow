@@ -1,0 +1,13 @@
+.scrollbar {
+    max-height: 12rem;
+    overflow: auto;
+}
+
+.ps__rail-y {
+    background-color: #007bff;
+    opacity: 0.6;
+}
+
+.ps__thumb-y {
+    background-color: #0056b3;
+}

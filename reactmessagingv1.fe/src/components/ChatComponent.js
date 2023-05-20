@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../helpers/AuthContext';
-import './DashboardPage.css';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import 'react-perfect-scrollbar/dist/css/styles.css';
 
 const ChatComponent = ({ user, connection }) => {
     const [messages, setMessages] = useState([]);
@@ -15,7 +16,7 @@ const ChatComponent = ({ user, connection }) => {
                     console.log(message);
                     setMessages((prevMessages) => [
                         { user: senderUserName, text: message, time: currentTime },
-                        ...prevMessages
+                        ...prevMessages,
                     ].sort((a, b) => new Date(a.time) - new Date(b.time)));
                 }
             });
@@ -29,9 +30,7 @@ const ChatComponent = ({ user, connection }) => {
 
     const handleSendMessage = async () => {
         if (messageInput !== '' && connection) {
-            await connection
-                .invoke('SendMessageToUser', user.id, currentUser.email, messageInput)
-                .catch((err) => console.log(err));
+            await connection.invoke('SendMessageToUser', user.id, currentUser.email, messageInput).catch((err) => console.log(err));
 
             const newMessage = {
                 user: currentUser.email,
@@ -41,7 +40,7 @@ const ChatComponent = ({ user, connection }) => {
 
             setMessages((prevMessages) => [
                 ...prevMessages,
-                newMessage
+                newMessage,
             ]);
             setMessageInput('');
         }
@@ -58,32 +57,35 @@ const ChatComponent = ({ user, connection }) => {
     };
 
     return (
-        <div className="chat-container">
+        <div className="chat-container d-flex flex-column h-100">
             <div className="chat-header">
                 <h2>{chatTitle}</h2>
             </div>
-            <div className="messages">
+            <PerfectScrollbar options={{ wheelPropagation: true }} className="flex-grow-1">
                 {messages.slice().reverse().map((message, index) => (
-                    <div key={index} className="message">
-                        <div className="message-avatar">{message.user.charAt(0)}</div>
+                    <div key={index} className="d-flex align-items-center mb-3">
+                        <div className="message-avatar bg-primary d-flex align-items-center justify-content-center rounded-circle avatar">
+                            {message.user.charAt(0)}
+                        </div>
                         <div className="message-content">
                             <div className="chat-message-text">{message.text}</div>
-                            <div className="message-info">
-                                <div className="message-sender">{message.user}</div>
-                                <div className="message-time">{formatDateTime(message.time)}</div>
+                            <div className="message-info d-flex">
+                                <div className="message-sender text-primary mr-2">{message.user}</div>
+                                <div className="message-time text-secondary">{formatDateTime(message.time)}</div>
                             </div>
                         </div>
                     </div>
                 ))}
-            </div>
-            <div className="chat-input">
+            </PerfectScrollbar>
+            <div className="chat-input d-flex align-items-center mt-1 mb-3">
                 <input
                     type="text"
+                    className="form-control flex-grow-1"
                     placeholder="Type a message..."
                     value={messageInput}
                     onChange={(e) => setMessageInput(e.target.value)}
                 />
-                <button className="send-message-btn" onClick={handleSendMessage}>Send</button>
+                <button className="btn btn-primary ml-2" onClick={handleSendMessage}>Send</button>
             </div>
         </div>
     );

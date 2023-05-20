@@ -4,7 +4,7 @@ import { useAuth } from "../helpers/AuthContext";
 import ChatComponent from './ChatComponent';
 import ChatButton from './ChatButtonComponent';
 import UserSearch from './UserSearchPopup';
-import "./DashboardPage.css";
+import { Container, Row, Col, Button } from 'react-bootstrap';
 
 const DashboardPage = () => {
     const { logout, currentUser } = useAuth();
@@ -26,19 +26,19 @@ const DashboardPage = () => {
 
     useEffect(() => {
         if (connection) {
-            connection.start()
+            connection
+                .start()
                 .then(() => console.log('Connection started!'))
-                .catch(err => console.log('Error while establishing connection :('));
+                .catch((err) => console.log('Error while establishing connection :('));
 
             const handleAcceptChatRequest = (senderUser) => {
                 if (!activeChats[senderUser.id]) {
                     setActiveChats((prevChats) => ({ ...prevChats, [senderUser.id]: senderUser }));
-                    setChatUser(senderUser); 
+                    setChatUser(senderUser);
                 } else {
                     console.log(`Chat with user ${senderUser.userName} already exists`);
                 }
             };
-
 
             connection.on("ReceiveChatRequest", (senderUserId, senderUserName) => {
                 console.log(`Chat request received from ${senderUserName}`);
@@ -60,9 +60,10 @@ const DashboardPage = () => {
 
             // clean up on unmount
             return () => {
-                connection.stop()
+                connection
+                    .stop()
                     .then(() => console.log('Connection stopped!'))
-                    .catch(err => console.log('Error while stopping connection :('));
+                    .catch((err) => console.log('Error while stopping connection :('));
 
                 connection.off("ReceiveChatRequest");
                 connection.off("ReceiveMessage");
@@ -72,12 +73,12 @@ const DashboardPage = () => {
 
     const handleStartChat = (user) => {
         if (!activeChats[user.id]) {
-            setActiveChats(prevChats => ({ ...prevChats, [user.id]: user }));
-            setChatUser(user); 
+            setActiveChats((prevChats) => ({ ...prevChats, [user.id]: user }));
+            setChatUser(user);
             setShowPopup(false);
 
             // Send chat request to the other user
-            connection.invoke("SendChatRequest", user.id, currentUser.email).catch(err => console.log(err));
+            connection.invoke("SendChatRequest", user.id, currentUser.email).catch((err) => console.log(err));
             console.log(`Chat request sent as ${currentUser.email}`);
         } else {
             console.log(`Chat with user ${user.userName} already exists`);
@@ -85,26 +86,45 @@ const DashboardPage = () => {
     };
 
     return (
-        <div className="dashboard-container">
-            <div className="sidebar">
-                <div className="avatar">P</div>
-                <div className="chat-buttons">
-                    {Object.values(activeChats).map(user => (
-                        <ChatButton key={user.id} user={user} onClick={() => setChatUser(user)} />
-                    ))}
-                </div>
-                <div className="sidebar-buttons">
-                    <button className="sidebar-btn" onClick={() => setShowPopup(!showPopup)}>Find Users</button>
-                    <button className="sidebar-btn">Settings</button>
-                    <button className="sidebar-btn" onClick={logout}>Logout</button>
-                </div>
-                {showPopup && <UserSearch closePopup={() => setShowPopup(false)} startChat={handleStartChat} connection={connection} activeChats={activeChats} />}
-            </div>
-            <div className="main">
-                {console.log('chatUser in render:', chatUser)}
-                {chatUser && <ChatComponent user={chatUser} connection={connection} />}
-            </div>
-        </div>
+        <Container fluid className="dashboard-container h-100">
+            <Row className="w-100">
+                <Col xs={2} className="sidebar bg-dark text-white d-flex flex-column align-items-center justify-content-between">
+                    <div className="avatar bg-primary d-flex align-items-center justify-content-center rounded-circle">P</div>
+                    <div className="chat-buttons w-100">
+                        {Object.values(activeChats).map((user) => (
+                            <ChatButton key={user.id} user={user} onClick={() => setChatUser(user)} />
+                        ))}
+                    </div>
+                    <div className="sidebar-buttons w-100">
+                        <Button
+                            variant="dark"
+                            className="sidebar-btn w-100 text-white border-white"
+                            onClick={() => setShowPopup(!showPopup)}
+                        >
+                            Find Users
+                        </Button>
+                        <Button variant="dark" className="sidebar-btn w-100 text-white border-white">
+                            Settings
+                        </Button>
+                        <Button variant="dark" className="sidebar-btn w-100 text-white border-white" onClick={logout}>
+                            Logout
+                        </Button>
+                    </div>
+                    {showPopup && (
+                        <UserSearch
+                            closePopup={() => setShowPopup(false)}
+                            startChat={handleStartChat}
+                            connection={connection}
+                            activeChats={activeChats}
+                        />
+                    )}
+                </Col>
+                <Col xs={10} className="main d-flex flex-column align-items-center">
+                    {chatUser && <ChatComponent user={chatUser} connection={connection} />}
+                </Col>
+            </Row>
+        </Container>
+
     );
 };
 

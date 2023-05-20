@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import api from '../helpers/api';
+import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import 'react-perfect-scrollbar/dist/css/styles.css';
+import './UserSearchPopup.css';
 
 const UserSearch = ({ closePopup, startChat, activeChats }) => {
     const [query, setQuery] = useState('');
@@ -32,20 +36,47 @@ const UserSearch = ({ closePopup, startChat, activeChats }) => {
     };
 
     return (
-        <div>
-            <button className="close-popup-btn" onClick={closePopup}>X</button>
-            <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} />
-            <button onClick={handleSearch}>Search</button>
-            <div style={{ maxHeight: '200px', overflowY: 'scroll' }}>
-                {users.map(user => (
-                    <div key={user.id}>
-                        <input type="checkbox" onChange={(e) => handleCheckboxChange(user, e.target.checked)} />
-                        {user.userName}
-                    </div>
-                ))}
-            </div>
-            <button onClick={() => selectedUsers.length === 1 ? startPrivateChat(selectedUsers[0]) : startGroupChat()}>Start Chat</button>
-        </div>
+        <Modal show onHide={closePopup} centered>
+            <Modal.Header closeButton>
+                <Modal.Title>User Search</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form.Group as={Row} controlId="searchForm">
+                    <Col xs={9}>
+                        <Form.Control
+                            type="text"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            placeholder="Search users"
+                        />
+                    </Col>
+                    <Col xs={3}>
+                        <Button variant="primary" onClick={handleSearch} className="w-100">
+                            Search
+                        </Button>
+                    </Col>
+                </Form.Group>
+                <PerfectScrollbar options={{ wheelPropagation: true }} className="scrollbar mt-2">
+                    {users.map(user => (
+                        <Form.Check
+                            key={user.id}
+                            type="checkbox"
+                            id={`checkbox-${user.id}`}
+                            label={user.userName}
+                            onChange={(e) => handleCheckboxChange(user, e.target.checked)}
+                        />
+                    ))}
+                </PerfectScrollbar>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={closePopup}>
+                    Close
+                </Button>
+                <Button onClick={() => selectedUsers.length === 1 ? startPrivateChat(selectedUsers[0]) : startGroupChat()}>
+                    Start Chat
+                </Button>
+            </Modal.Footer>
+        </Modal>
     );
 };
 
