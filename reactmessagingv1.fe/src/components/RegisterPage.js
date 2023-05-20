@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../helpers/api';
-import './RegisterPage.css';
+import { Container, Form, Button, Alert, Card } from 'react-bootstrap';
 
 function RegisterPage() {
     const [email, setEmail] = useState('');
@@ -14,8 +14,6 @@ function RegisterPage() {
     const navigate = useNavigate();
 
     const getPasswordStrength = () => {
-        // This is a very simple password strength check
-        // You may want to add more complex checks or use a library
         return password.length > 8 ? 'Strong' : 'Weak';
     };
 
@@ -53,47 +51,61 @@ function RegisterPage() {
     };
 
     return (
-        <div className="register-page">
-            <div className="register-container">
-                <div className="register-box">
-                    <h1 className="register-title">Register</h1>
-                    <form onSubmit={handleSubmit}>
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                        <div className="password-strength">
-                            Password strength: {getPasswordStrength()}
-                        </div>
-                        <input
-                            type="password"
-                            placeholder="Confirm Password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            required
-                        />
-                        {error && <p className="error">{error}</p>}
-                        {success && <p className="success">Register Success!</p>}
-                        <button type="submit" disabled={loading}>
+        <Container className="register-page d-flex justify-content-center align-items-center vh-100">
+            <Card className="register-container shadow">
+                <Card.Body className="register-box pb-0">
+                    <h1 className="register-title text-center mb-4">Register</h1>
+
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group controlId="email" className="mb-2">
+                            <Form.Control
+                                type="email"
+                                placeholder="Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="password" className="mb-2">
+                            <Form.Control
+                                type="password"
+                                placeholder="Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                            <div className="password-strength">
+                                Password strength: {getPasswordStrength()}
+                            </div>
+                        </Form.Group>
+
+                        <Form.Group controlId="confirmPassword" className="mb-2">
+                            <Form.Control
+                                type="password"
+                                placeholder="Confirm Password"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                required
+                            />
+                        </Form.Group>
+
+                        {error && <Alert variant="danger">{error}</Alert>}
+                        {success && <Alert variant="success">Register Success!</Alert>}
+
+                        <Button type="submit" disabled={loading} variant="primary" className="w-100">
                             {loading ? 'Loading...' : 'Register'}
-                        </button>
-                    </form>
-                    <p>
-                        Already have an account? <a href="/login">Log In</a>
-                    </p>
-                </div>
-            </div>
-        </div>
+                        </Button>
+                    </Form>
+
+                    <div className="signup-container text-center mt-2">
+                        <p>
+                            Already have an account? <a href="/login">Log In</a>
+                        </p>
+                    </div>
+                </Card.Body>
+            </Card>
+        </Container>
     );
 }
 

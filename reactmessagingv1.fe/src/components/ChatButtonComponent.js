@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Button } from 'react-bootstrap';
 
 const ChatButton = ({ user, onClick }) => {
+    const [active, setActive] = useState(false);
+
+    const handleClick = () => {
+        setActive(true);
+        onClick();
+    };
+
     return (
-        <button className="chat-btn" onClick={onClick}>
+        <Button
+            className="chat-btn w-100"
+            variant={active ? 'primary' : 'secondary'}
+            onClick={handleClick}
+        >
             Chat with {user.userName}
-        </button>
+        </Button>
     );
 };
 
