@@ -132,7 +132,6 @@ const DashboardPage = () => {
                 </Col>
             </Row>
         </Container>
-
     );
 };
 

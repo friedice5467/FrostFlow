@@ -6,6 +6,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import './UserSearchPopup.css';
 import LoadingModal from './LoadingModal';
 import ApiExceptionModal from './ApiExceptionModal';
+import { useAuth } from '../helpers/AuthContext';
 
 const UserSearch = ({ closePopup, startChat, activeChats }) => {
     const [query, setQuery] = useState('');
@@ -13,15 +14,19 @@ const UserSearch = ({ closePopup, startChat, activeChats }) => {
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const { currentUser } = useAuth();
 
     const handleSearch = async () => {
+        if (query.trim() === '') {
+            return; // Exit early if search field is empty
+        }
         setLoading(true);
         try {
             const response = await api.get(`identity/search?query=${query}`);
-            setUsers(response.data);
+            const filteredUsers = response.data.filter(user => user.id !== currentUser.userId);
+            setUsers(filteredUsers);
         } catch (error) {
-            console.log(error);
-            setError('An error occurred. Please try again.');
+            setError(`${error}`);
         } finally {
             setLoading(false);
         }
@@ -47,28 +52,35 @@ const UserSearch = ({ closePopup, startChat, activeChats }) => {
         // Logic to create a group using the selectedUsers list
     };
 
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+    };
+
     return (
-        <Modal show onHide={closePopup} centered>
+        <Modal show onHide={closePopup} centered backdrop="static" keyboard={false}>
             <Modal.Header closeButton>
                 <Modal.Title>User Search</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form.Group as={Row} controlId="searchForm">
-                    <Col xs={9}>
+                    <Col xs={12} sm={9}>
                         <Form.Control
                             type="text"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
+                            onKeyPress={handleKeyPress}
                             placeholder="Search users"
                         />
                     </Col>
-                    <Col xs={3}>
+                    <Col xs={12} sm={3}>
                         <Button variant="primary" onClick={handleSearch} className="w-100">
                             Search
                         </Button>
                     </Col>
                 </Form.Group>
-                <PerfectScrollbar options={{ wheelPropagation: true }} className="scrollbar mt-2">
+                <PerfectScrollbar options={{ wheelPropagation: true }} className="scrollbar mt-2 px-1">
                     {users.map(user => (
                         <Form.Check
                             key={user.id}
@@ -80,12 +92,12 @@ const UserSearch = ({ closePopup, startChat, activeChats }) => {
                     ))}
                 </PerfectScrollbar>
             </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={closePopup}>
-                    Close
-                </Button>
+            <Modal.Footer className="py-2">
                 <Button onClick={() => selectedUsers.length === 1 ? startPrivateChat(selectedUsers[0]) : startGroupChat()}>
                     Start Chat
+                </Button>
+                <Button variant="secondary" onClick={closePopup}>
+                    Close
                 </Button>
             </Modal.Footer>
             {loading && <LoadingModal />}
