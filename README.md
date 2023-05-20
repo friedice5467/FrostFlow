@@ -25,12 +25,11 @@ The application emphasizes security by implementing secure authentication using 
 
 To run the React Messaging Application locally, follow these steps:
 
-1. Clone the repository: `git clone [repository-url]`
-2. Navigate to the project directory: `cd react-messaging-app`
-3. Install dependencies: `npm install`
-4. Launch the server-side API located at `http://localhost:7272`.
-5. Start the development server: `npm start`
-6. Open your web browser and visit: `http://localhost:3000`
+1. Clone the repository in Visual Studio: `git clone [repository-url]`
+2. Add the connection string and tokens necesary in appsettings.json
+3. Install dependencies in the react front end: `npm install`
+4. Start the development server and api
+5. Open your web browser and visit: `http://localhost:3000`
 
 ## License
 
