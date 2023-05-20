@@ -1,0 +1,16 @@
+.chat-message-text {
+    background-color: #F7F8F8;
+    border-radius: .65rem;
+    padding: .5rem;
+}
+.avatar {
+    background-color: #3f51b5;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 1.2rem;
+}

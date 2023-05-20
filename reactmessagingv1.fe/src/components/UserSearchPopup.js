@@ -4,15 +4,27 @@ import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import './UserSearchPopup.css';
+import LoadingModal from './LoadingModal';
+import ApiExceptionModal from './ApiExceptionModal';
 
 const UserSearch = ({ closePopup, startChat, activeChats }) => {
     const [query, setQuery] = useState('');
     const [users, setUsers] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
     const handleSearch = async () => {
-        const response = await api.get(`identity/search?query=${query}`);
-        setUsers(response.data);
+        setLoading(true);
+        try {
+            const response = await api.get(`identity/search?query=${query}`);
+            setUsers(response.data);
+        } catch (error) {
+            console.log(error);
+            setError('An error occurred. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleCheckboxChange = (user, isChecked) => {
@@ -76,6 +88,8 @@ const UserSearch = ({ closePopup, startChat, activeChats }) => {
                     Start Chat
                 </Button>
             </Modal.Footer>
+            {loading && <LoadingModal />}
+            {error && <ApiExceptionModal error={error} onClose={() => setError('')} />}
         </Modal>
     );
 };

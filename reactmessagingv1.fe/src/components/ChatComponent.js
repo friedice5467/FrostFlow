@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../helpers/AuthContext';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
+import './ChatComponent.css';
 
 const ChatComponent = ({ user, connection }) => {
     const [messages, setMessages] = useState([]);
@@ -67,7 +68,7 @@ const ChatComponent = ({ user, connection }) => {
                         <div className="message-avatar bg-primary d-flex align-items-center justify-content-center rounded-circle avatar">
                             {message.user.charAt(0)}
                         </div>
-                        <div className="message-content">
+                        <div className="message-content ps-1">
                             <div className="chat-message-text">{message.text}</div>
                             <div className="message-info d-flex">
                                 <div className="message-sender text-primary mr-2">{message.user}</div>
@@ -85,7 +86,9 @@ const ChatComponent = ({ user, connection }) => {
                     value={messageInput}
                     onChange={(e) => setMessageInput(e.target.value)}
                 />
-                <button className="btn btn-primary ml-2" onClick={handleSendMessage}>Send</button>
+                <button className="btn btn-primary ml-2" onClick={handleSendMessage}>
+                    Send
+                </button>
             </div>
         </div>
     );
