@@ -8,7 +8,7 @@ import LoadingModal from './LoadingModal';
 import ApiExceptionModal from './ApiExceptionModal';
 import { useAuth } from '../helpers/AuthContext';
 
-const UserSearch = ({ closePopup, startChat, activeChats }) => {
+const UserSearch = ({ closePopup, startSession, activeSessions }) => {
     const [query, setQuery] = useState('');
     const [users, setUsers] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
@@ -40,15 +40,16 @@ const UserSearch = ({ closePopup, startChat, activeChats }) => {
         }
     };
 
-    const startPrivateChat = (user) => {
-        if (!activeChats[user.id]) {
-            startChat(user);
+    const startPrivateSession = (user) => {
+        if (!activeSessions || Object.values(activeSessions).find(session => session.user.id === user.id)) {
+          startSession(user);
         } else {
-            console.log(`Chat with user ${user.userName} already exists`);
+          console.log(`Session with user ${user.userName} already exists`);
         }
-    };
+      };
 
-    const startGroupChat = () => {
+
+    const startGroupSession = () => {
         // Logic to create a group using the selectedUsers list
     };
 
@@ -93,8 +94,8 @@ const UserSearch = ({ closePopup, startChat, activeChats }) => {
                 </PerfectScrollbar>
             </Modal.Body>
             <Modal.Footer className="py-2">
-                <Button onClick={() => selectedUsers.length === 1 ? startPrivateChat(selectedUsers[0]) : startGroupChat()}>
-                    Start Chat
+                <Button onClick={() => selectedUsers.length === 1 ? startPrivateSession(selectedUsers[0]) : startGroupSession()}>
+                    Start Session
                 </Button>
                 <Button variant="secondary" onClick={closePopup}>
                     Close
