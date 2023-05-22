@@ -4,21 +4,32 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import './ChatComponent.css';
 
-const ChatComponent = ({ user, connection }) => {
-    const [messages, setMessages] = useState([]);
+const ChatComponent = ({ session, connection, messages }) => {
     const [messageInput, setMessageInput] = useState('');
     const { currentUser } = useAuth();
-    const chatTitle = `Chat with ${user.userName}`;
+    const chatTitle = `Chat with ${session.user.userName}`;
+    const [messageList, setMessageList] = useState(messages);
+
+    useEffect(() => {
+        const formattedMessages = messages.map(message => ({
+            user: message.senderUserName,
+            text: message.text,
+            time: message.sentAt,
+        }));
+        setMessageList(formattedMessages);
+    }, [messages]);
 
     useEffect(() => {
         if (connection) {
-            connection.on('ReceiveMessage', (senderUserId, message, senderUserName, currentTime) => {
-                if (senderUserId === user.id) {
+            connection.on('ReceiveMessage', (sessionId, senderUserId, message, senderUserName, currentTime) => {
+                if (sessionId === session.id) {
                     console.log(message);
-                    setMessages((prevMessages) => [
-                        { user: senderUserName, text: message, time: currentTime },
-                        ...prevMessages,
-                    ].sort((a, b) => new Date(a.time) - new Date(b.time)));
+                    const newMessage = {
+                        user: senderUserName,
+                        text: message,
+                        time: currentTime,
+                    };
+                    setMessageList((prevMessages) => [...prevMessages, newMessage]);
                 }
             });
 
@@ -27,11 +38,11 @@ const ChatComponent = ({ user, connection }) => {
                 connection.off('ReceiveMessage');
             };
         }
-    }, [connection, user]);
+    }, [connection, session.id]);
 
     const handleSendMessage = async () => {
         if (messageInput.trim() !== '' && connection) {
-            await connection.invoke('SendMessageToUser', user.id, currentUser.email, messageInput).catch((err) => console.log(err));
+            await connection.invoke('SendMessageToUser', session.user.id, currentUser.email, messageInput).catch((err) => console.log(err));
 
             const newMessage = {
                 user: currentUser.email,
@@ -39,7 +50,7 @@ const ChatComponent = ({ user, connection }) => {
                 time: new Date().toISOString(),
             };
 
-            setMessages((prevMessages) => [...prevMessages, newMessage]);
+            setMessageList((prevMessages) => [...prevMessages, newMessage]);
             setMessageInput('');
         }
     };
@@ -67,7 +78,7 @@ const ChatComponent = ({ user, connection }) => {
                 <h2>{chatTitle}</h2>
             </div>
             <PerfectScrollbar options={{ wheelPropagation: true }} className="flex-grow-1">
-                {messages.map((message, index) => (
+                {messageList.map((message, index) => (
                     <div key={index} className="d-flex align-items-center mb-3 remlimit">
                         <div className="message-avatar bg-primary d-flex align-items-center justify-content-center rounded-circle avatar">
                             {message.user.charAt(0)}

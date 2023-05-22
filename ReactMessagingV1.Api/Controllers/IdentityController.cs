@@ -11,7 +11,7 @@ using TestReactAuth.Api.Model;
 namespace TestReactAuth.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class IdentityController : ControllerBase
     {
         private readonly UserManager<UserModel> _userManager;
@@ -92,9 +92,8 @@ namespace TestReactAuth.Api.Controllers
         {
             if (string.IsNullOrEmpty(query))
             {
-                return BadRequest("Search cannot be empty.");
+                return Ok(new List<object>()); // Return an empty list
             }
-
             var users = _userManager.Users
                 .Where(u => u.UserName.ToLower().Contains(query.ToLower()))
                 .Select(u => new { u.UserName, u.Id })
@@ -102,7 +101,6 @@ namespace TestReactAuth.Api.Controllers
 
             return Ok(users);
         }
-
 
     }
 }

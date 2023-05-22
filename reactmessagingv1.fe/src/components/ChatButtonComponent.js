@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 
-const ChatButton = ({ user, onClick }) => {
+const ChatButton = ({ session, onClick }) => {
     const [active, setActive] = useState(false);
 
     const handleClick = () => {
@@ -15,7 +15,7 @@ const ChatButton = ({ user, onClick }) => {
             variant={active ? 'secondary' : 'outline-secondary'}
             onClick={handleClick}
         >
-            Chat with {user.userName}
+            Chat with {session.user.userName}
         </Button>
     );
 };
