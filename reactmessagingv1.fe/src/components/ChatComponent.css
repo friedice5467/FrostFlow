@@ -1,21 +1,66 @@
-.chat-message-text {
-    background-color: #F7F8F8;
-    border-radius: .65rem;
-    padding: .5rem;
-}
-.avatar {
-    background-color: #3f51b5;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    color: #fff;
-    font-size: 1.2rem;
+html{
+    overflow: hidden;
 }
 
-.remlimit {
-    max-width: 30rem;
-    overflow-wrap: anywhere;
+.chat-container {
+    position: absolute;
+    background-color: #fff;
+    border-radius: 0.65rem;
+    height: calc(100vh - 2rem) !important;
+    width: calc(80vw - 10rem);
 }
+
+.chat-container.draggable {
+    cursor: grabbing;
+}
+
+.chat-input {
+    border-bottom-left-radius: 0.65rem;
+    border-bottom-right-radius: 0.65rem;
+    padding: 0.25rem 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+    .chat-input input {
+        flex-grow: 1;
+        border-radius: 0;
+        border-top-right-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+    }
+
+    .chat-input .btn-primary {
+        border-radius: 0;
+        border-top-left-radius: 0.25rem;
+        border-bottom-left-radius: 0.25rem;
+        background-color: var(--bs-secondary);
+    }
+
+.scrollbar-container {
+    height: calc(100vh - 10rem);
+}
+
+/* Hide the scrollbar track */
+.chat-container .ps__rail-y {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Show the scrollbar thumb on hover */
+.chat-container:hover .ps__rail-y {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Customize the scrollbar color */
+.scrollbar-container .ps__thumb-y {
+    background-color: var(--bs-secondary);
+}
+
+    .scrollbar-container .ps__thumb-y:hover {
+        background-color: var(--bs-secondary);
+    }
+
+    .scrollbar-container .ps__thumb-y:active {
+        background-color: var(--bs-secondary);
+    }
