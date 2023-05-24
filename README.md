@@ -21,6 +21,9 @@ The React Messaging Application is a real-time messaging platform built with Rea
 - **SignalR**: A library for adding real-time web functionality to applications.
 - **JWT (JSON Web Tokens)**: A secure method for transferring claims between parties as JSON objects.
 
+## Screenshots
+![image](https://github.com/friedice5467/FrostFlow/assets/58054670/a8189c24-262c-4992-a397-09985bda8ece)
+
 ## Getting Started
 
 To run the React Messaging Application locally, follow these steps:
