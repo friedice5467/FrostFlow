@@ -1,20 +1,6 @@
-.resizable-window {
-    position: absolute;
+.react-draggable {
     background-color: #fff;
     border-radius: 0.65rem;
-    min-width: 20rem;
-    min-height: 23.5rem;
-}
-
-.chat-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: .65rem .65rem .3rem .65rem;
-    background-color: var(--bs-secondary);
-    border-top-left-radius: 0.65rem;
-    border-top-right-radius: 0.65rem;
-    cursor: grab;
 }
 
     .window-header h2 {
@@ -57,15 +43,7 @@
     }
 
 .window-content {
-    padding: 1rem;
-}
-
-.resizable-window.draggable {
-    cursor: grabbing;
-}
-
-.resizable-window.resizing {
-    cursor: nwse-resize;
+    height: calc(100% - 7rem);
 }
 
     .resizable-window.resizing .window-content {
