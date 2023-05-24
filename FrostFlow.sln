@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrostFlow.API", "ReactMessagingV1.Api\FrostFlow.API.csproj", "{7CBFE242-B1A2-4EFA-943B-57F5440E9579}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrostFlow.API", "FrostFlow.API\FrostFlow.API.csproj", "{7CBFE242-B1A2-4EFA-943B-57F5440E9579}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "FrostFlow.FE", "ReactMessagingV1.FE\FrostFlow.FE.esproj", "{98252FD6-A436-463F-A124-9489F2425EF9}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "FrostFlow.FE", "FrostFlow.FE\FrostFlow.FE.esproj", "{98252FD6-A436-463F-A124-9489F2425EF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
