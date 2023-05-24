@@ -1,0 +1,52 @@
+.react-draggable {
+    background-color: #fff;
+    border-radius: 0.65rem;
+}
+
+    .window-header h2 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #fff;
+        text-align: center; /* Center the title */
+        flex-grow: 1; /* Take remaining space */
+    }
+
+.window-title{
+    max-width: 80%;
+}
+
+.window-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-self: start;
+    max-width: 20%;
+}
+
+    .window-controls button {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+    }
+
+    .window-controls .minimize {
+        background-color: #f3c935;
+    }
+
+    .window-controls .maximize {
+        background-color: #37c648;
+    }
+
+    .window-controls .close {
+        background-color: #d63737;
+    }
+
+.window-content {
+    height: calc(100% - 7rem);
+}
+
+    .resizable-window.resizing .window-content {
+        pointer-events: none;
+    }
+

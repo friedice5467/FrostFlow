@@ -1,21 +1,132 @@
-.chat-message-text {
-    background-color: #F7F8F8;
-    border-radius: .65rem;
-    padding: .5rem;
-}
-.avatar {
-    background-color: #3f51b5;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    color: #fff;
-    font-size: 1.2rem;
+html {
+    overflow: hidden;
 }
 
-.remlimit {
-    max-width: 30rem;
-    overflow-wrap: anywhere;
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--bs-dark);
+    color: white;
+    border-top-right-radius: .65rem;
+    border-top-left-radius: .65rem;
+    cursor: move;
 }
+
+.window-title h2 {
+    margin: 0;
+    color: white;
+}
+
+.window-controls button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+    .window-controls button:hover {
+        color: var(--bs-primary);
+    }
+
+.message-container {
+    margin: 5px 0;
+}
+
+.message-avatar {
+    color: white;
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+    text-transform: uppercase;
+}
+
+.message-content {
+    padding: 10px;
+    border-radius: 8px;
+    color: white;
+    max-width: 70%;
+    position: relative;
+}
+
+    .message-content.bg-light {
+        background-color: #f0f0f0;
+        color: black;
+    }
+
+    .message-content.bg-light > .message-time{
+        color: slategray !important;
+    }
+
+.message-sender {
+    font-weight: 500;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.message-text {
+    word-break: break-word;
+}
+
+.message-time {
+    font-size: 0.8em;
+    color: rgba(255, 255, 255, 0.6);
+    display:flex;
+    justify-content: end;
+}
+
+.chat-input {
+    padding: 10px;
+    border-top: 1px solid var(--bs-light);
+}
+
+    .chat-input input {
+        border: none;
+        box-shadow: none;
+    }
+
+    .chat-input .btn-primary {
+        background-color: var(--bs-primary);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+    }
+
+.flex-grow-1 {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.scrollbar-container {
+    margin-right: -1px;
+    margin-left: -1px;
+    height: 100%;
+    background-color: #DEDEDE;
+}
+
+    /* Hide the scrollbar track */
+    .scrollbar-container .ps__rail-y {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    /* Show the scrollbar thumb on hover */
+    .scrollbar-container:hover .ps__rail-y {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* Customize the scrollbar color */
+    .scrollbar-container .ps__thumb-y {
+        background-color: var(--bs-secondary);
+    }
+
+        .scrollbar-container .ps__thumb-y:hover {
+            background-color: var(--bs-secondary);
+        }
+
+        .scrollbar-container .ps__thumb-y:active {
+            background-color: var(--bs-secondary);
+        }
