@@ -7,7 +7,7 @@ $danger: #dc3545; // Bootstrap danger color
 $light: #f7f8f8; // Message color
 $dark: darken($primary, 20%); // Dark color for elements
 
-$theme-colors: ( "primary": $primary, "secondary": $secondary, "success": $success, "info": $info, "warning": $warning, "danger": $danger, "light": $light, "dark": $dark );
+$theme-colors: ( "primary": $primary, "secondary": $secondary, "success": $success, "info": $info, "warning": $warning, "danger": $danger, "light": $light, "dark": $dark, "accordion-bg": $primary, "accordion-color": $light);
 
 @import '~bootstrap/scss/bootstrap';
 

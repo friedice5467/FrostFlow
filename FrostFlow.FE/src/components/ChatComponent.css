@@ -100,8 +100,6 @@ html {
 }
 
 .scrollbar-container {
-    margin-right: -1px;
-    margin-left: -1px;
     height: 100%;
     background-color: #DEDEDE;
 }

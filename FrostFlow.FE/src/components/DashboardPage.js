@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import * as signalR from '@microsoft/signalr';
 import { useAuth } from "../helpers/AuthContext";
 import ChatComponent from './ChatComponent';
-import ChatButton from './ChatButtonComponent';
 import UserSearch from './UserSearchPopup';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Navbar, Dropdown, Accordion, Card, Nav, NavDropdown } from 'react-bootstrap';
 import './DashboardPage.css';
 import api from '../helpers/api';
 import LoadingModal from './LoadingModal';
@@ -17,9 +16,15 @@ const DashboardPage = () => {
     const [activeChats, setActiveChats] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [chatSessions, setChatSessions] = useState([]);
     const [currentSession, setCurrentSession] = useState(null);
     const [selectedSessionMessages, setSelectedSessionMessages] = useState([]);
+    const [collapsed, setCollapsed] = useState(false);
+    const [activeAccordionKey, setActiveAccordionKey] = useState('0');
+
+
+    const toggleSidebar = () => {
+        setCollapsed(!collapsed);
+    };
 
     const fetchChatSessions = async () => {
         setIsLoading(true);
@@ -130,37 +135,48 @@ const DashboardPage = () => {
         <>
             {isLoading && <LoadingModal />}
             {error && <ApiExceptionModal error={error} onClose={() => setError(null)} />}
-            <Container fluid className="dashboard-container h-100 mx-0 px-0 bg-light">
+            <Container fluid className="dashboard-container mx-0 px-0 bg-light">
+                <Row className="mx-0">
+                    <Col xs={12} className="px-0">
+                        <Navbar bg="dark" variant="dark" expand="lg" className="flex-md-nowrap p-0 shadow">
+                            <Button variant="outline-primary" onClick={toggleSidebar}><span className="navbar-toggler-icon"></span></Button>
+                            <Navbar.Brand href="#home" className="col-sm-3 col-md-2 mr-0 ms-2">My Dashboard</Navbar.Brand>
+                            <Navbar.Collapse id="basic-navbar-nav" className="px-3 d-flex justify-content-end">
+                                <Dropdown>
+                                    <Dropdown.Toggle variant="dark" id="dropdown-basic">
+                                        Profile
+                                    </Dropdown.Toggle>
+
+                                    <Dropdown.Menu align="right">
+                                        <Dropdown.Item href="#action/3.1">Settings</Dropdown.Item>
+                                        <Dropdown.Divider />
+                                        <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </Navbar.Collapse>
+                        </Navbar>
+                    </Col>
+                </Row>
                 <Row className="h-100 mx-0">
-                    <Col xs={12} md={2} className="sidebar bg-dark text-white d-flex flex-column align-items-center justify-content-between px-0">
-                        <div className="avatar bg-primary d-flex align-items-center justify-content-center rounded-circle">P</div>
-                        <div className="chat-buttons w-100">
-                            {Object.values(activeChats).map((session) => (
-                                <ChatButton key={session.id} session={session} onClick={() => handleChatButtonClick(session, session.user)} />
-                            ))}
-                        </div>
-                        <div className="sidebar-buttons w-100">
-                            <Button
-                                variant="outline-secondary"
-                                className="sidebar-btn w-100 text-white btn-rounded-0"
-                                onClick={() => setShowPopup(!showPopup)}
-                            >
-                                Find Users
-                            </Button>
-                            <Button
-                                variant="outline-secondary"
-                                className="sidebar-btn w-100 text-white btn-rounded-0"
-                            >
-                                Settings
-                            </Button>
-                            <Button
-                                variant="outline-secondary"
-                                className="sidebar-btn w-100 text-white btn-rounded-0"
-                                onClick={logout}
-                            >
-                                Logout
-                            </Button>
-                        </div>
+                    <Col xs={collapsed ? 0 : 2} md={collapsed ? 0 : 2} className={`${collapsed ? "d-none" : ""} sidebar bg-dark text-white d-flex flex-column align-items-center px-0`}>
+                        {(
+                            <Accordion className="w-100">
+                                <Accordion.Item eventKey="0" className="w-100">
+                                    <Accordion.Header className="bg-dark p-0">
+                                        Chats
+                                    </Accordion.Header>
+                                    <Accordion.Body className="flex-column px-0 py-0">
+                                        {Object.values(activeChats).map((session) => (
+                                            <Button
+                                                variant="" className="w-100 bg-dark text-light rounded-0 border-bottom border-primary" key={session.id} onClick={() => handleChatButtonClick(session, session.user)}>
+                                                {session.user.userName}
+                                            </Button>
+                                        ))}
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
+                        )}
+
                         {showPopup && (
                             <UserSearch
                                 closePopup={() => setShowPopup(false)}
@@ -170,14 +186,15 @@ const DashboardPage = () => {
                             />
                         )}
                     </Col>
-                    <Col xs={12} md={10} className="main d-flex flex-column align-items-center justify-content-center">
-                        {currentSession && (
-                            <ChatComponent
-                                session={currentSession}
-                                connection={connection}
-                                messages={selectedSessionMessages}
-                            />
-                        )}
+                    <Col xs={collapsed ? 12 : 10} md={collapsed ? 12 : 10} className="px-0 main">
+                        <div className="d-flex flex-column align-items-center justify-content-center">
+                            {currentSession && (
+                                <ChatComponent
+                                    session={currentSession}
+                                    connection={connection}
+                                    messages={selectedSessionMessages}
+                                />)}
+                        </div>
                     </Col>
                 </Row>
             </Container>
