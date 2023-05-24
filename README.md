@@ -1,4 +1,4 @@
-# React Messaging Application
+# FrostFlow
 
 ## Overview
 The React Messaging Application is a real-time messaging platform built with React and ASP.NET Core. It enables users to engage in secure and instant communication through direct messaging and group conversations. This project focuses on practical implementation and provides a great learning experience.
