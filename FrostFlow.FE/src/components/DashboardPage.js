@@ -154,7 +154,7 @@ const DashboardPage = () => {
                             <Navbar.Brand href="#home" className="col-sm-3 col-md-2 mr-0 ms-2">App</Navbar.Brand>
                             <Navbar.Collapse id="basic-navbar-nav" className="px-3 d-flex justify-content-end">
                                 <Dropdown>
-                                    <Dropdown.Toggle variant="dark" className="profile-gravatar" id="dropdown-basic">
+                                    <Dropdown.Toggle variant="dark" className="profile-gravatar rounded-5" id="dropdown-basic">
                                     </Dropdown.Toggle>
 
                                     <Dropdown.Menu align="right">
@@ -168,10 +168,10 @@ const DashboardPage = () => {
                     </Col>
                 </Row>
                 <Row className="h-100 mx-0">
-                    <Col xs={collapsed ? 0 : 2} md={collapsed ? 0 : 2} className={`${collapsed ? "d-none" : ""} sidebar bg-dark text-white d-flex flex-column align-items-center px-0`}>
+                    <Col xs={collapsed ? 0 : 1} md={collapsed ? 0 : 1} className={`${collapsed ? "d-none" : ""} sidebar bg-dark text-white d-flex flex-column align-items-center px-0`}>
                         {(
                             <Accordion className="w-100" transition transitionTimeout={250}>
-                                <AccordionItem header="Chats" className="w-100 ">
+                                <AccordionItem header="" className="w-100 ">
                                         {Object.values(activeChats).map((session) => (
                                             <Button
                                                 variant="" className="w-100 rounded-0 " key={session.id} onClick={() => handleChatButtonClick(session, session.user)}>
@@ -190,7 +190,7 @@ const DashboardPage = () => {
                             />
                         )}
                     </Col>
-                    <Col xs={collapsed ? 12 : 10} md={collapsed ? 12 : 10} className="px-0 main">
+                    <Col xs={collapsed ? 12 : 11} md={collapsed ? 12 : 11} className="px-0 main">
                         <div className="d-flex flex-column align-items-center justify-content-center">
                             {currentSession && (
                                 <ChatComponent

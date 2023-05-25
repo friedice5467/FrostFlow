@@ -144,24 +144,27 @@ const ChatComponent = ({ session, connection, messages }) => {
                     </div>
                 ))}
             </PerfectScrollbar>
-            <div className="chat-input d-flex align-items-center">
+            <div class="chat-input d-flex align-items-center position-relative">
                 <input
                     type="text"
-                    className="form-control rounded-0 shadow-none"
+                    className="form-control shadow-none"
                     placeholder="Type a message..."
                     value={messageInput}
                     onChange={(e) => setMessageInput(e.target.value)}
                     onKeyDown={handleKeyDown}
                 />
-                <button
-                    className="btn btn-primary ml-auto rounded-pill"
-                    onClick={handleSendMessage}
-                    disabled={messageInput.trim() === ''}
+                <svg
+                    onclick={handleSendMessage}
+                    class={`send-icon position-absolute ${messageInput.trim() === '' ? 'disabled' : ''}`}
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
                     style={{ cursor: messageInput.trim() === '' ? 'default' : 'pointer' }}
                 >
-                    Send
-                </button>
+                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                </svg>
             </div>
+
         </ResizableWindowComponent>
     );
 };
