@@ -22,7 +22,8 @@ The React Messaging Application is a real-time messaging platform built with Rea
 - **JWT (JSON Web Tokens)**: A secure method for transferring claims between parties as JSON objects.
 
 ## Screenshots
-![image](https://github.com/friedice5467/FrostFlow/assets/58054670/a8189c24-262c-4992-a397-09985bda8ece)
+![image](https://github.com/friedice5467/FrostFlow/assets/58054670/bd86b801-71be-4b7f-b3be-640af6f7f9f3)
+![image](https://github.com/friedice5467/FrostFlow/assets/58054670/f927e049-aa72-4ff8-bd29-0272df8cea6b)
 
 ## Getting Started
 
@@ -43,3 +44,4 @@ This project is licensed under the APACHE license. See the [LICENSE.txt](LICENSE
 Contributions to this project are highly appreciated and welcome. Feel free to submit pull requests or raise issues to contribute to the improvement of the application.
 
 *Note: The React Messaging Application is a project focused on exploring the implementation of real-time messaging functionality with React and ASP.NET Core.*
+*Additional Note: Project will be on hiatus from author as I will get more inspiration from other projects*
