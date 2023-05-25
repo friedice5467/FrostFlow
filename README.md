@@ -37,11 +37,11 @@ To run the React Messaging Application locally, follow these steps:
 
 ## TODO
 
-1. Groups and Channels: Allow users to create and join groups or channels. You could implement private groups where users need an invite or need to request to join, and public groups where anyone can join.
-2. Multimedia Messages: Allow users to send more than just text messages. They could send images, videos, or audio messages.
+1. Groups and Channels: Allow users to create and join groups or channels.
+2. Multimedia Messages: Allow users to send images, videos, and/or audio messages.
 3. Real-time Typing Indicators: Show when someone else is typing a message.
 4. Read Receipts: Show when a message has been delivered and read.
-5. Emoji Support: Allow users to send emojis. You could also allow custom emojis.
+5. Emoji Support: Allow users to send emojis/custom emojis.
 6. Message Reactions: Allow users to react to messages with emojis.
 7. Push Notifications: Notify users of new messages even when they're not actively using the chat.
 
