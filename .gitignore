@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /ReactMessagingV1.Api/appsettings.json
 /FrostFlow.API/appsettings.json
+/reactmessagingv1.fe/.env.development.local
