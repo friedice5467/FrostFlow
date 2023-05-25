@@ -20,53 +20,12 @@
     }
 }
 
-.btn-rounded-0 {
-    border-radius: 0;
-}
-
-.sidebar-buttons .btn:last-child {
-    border-bottom: none !important;
-}
-
-.sidebar-buttons .btn {
-    border-bottom: none !important;
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
-}
-
-.dashboard-container {
-    height: calc(100vh - 2.45rem); 
-}
-
-.accordion-item {
-    border-radius: 0 !important;
-    border: 0 !important;
-}
-
-.accordion-item:first-of-type .accordion-button {
-    border-top-left-radius: 0 !important;
-    border-top-right-radius: 0 !important;
-}
-
-.accordion-item:last-of-type .accordion-button.collapsed {
-    border-bottom-right-radius: 0 !important;
-    border-bottom-left-radius: 0 !important;
-}
-
-.accordion-item:first-of-type {
-    border-top-left-radius: 0 !important;
-    border-top-right-radius: 0 !important;
-}
-
-.accordion-item:last-of-type {
-    border-bottom-right-radius: 0 !important;
-    border-bottom-left-radius: 0 !important;
-}
-
-.accordion-button {
-    padding-top: .75rem !important;
-    padding-bottom: .75rem !important;
-    border-radius: 0!important;
-    color: white !important;
+.profile-gravatar {
+    background-image: url(../../public/default-avatar.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 3.5rem;
+    height: 3.5rem;
+    content: "";
 }

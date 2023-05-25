@@ -32,7 +32,7 @@ const formatDateTime = (dateTimeString) => {
 const ChatComponent = ({ session, connection, messages }) => {
     const [messageInput, setMessageInput] = useState('');
     const { currentUser } = useAuth();
-    const chatTitle = `Chat with ${session?.user?.userName}`;
+    const chatTitle = `${session?.user?.userName}`;
     const [messageList, setMessageList] = useState(messages);
     const [isMinimized, setIsMinimized] = useState(false);
     const [isMaximized, setIsMaximized] = useState(false);
@@ -119,7 +119,8 @@ const ChatComponent = ({ session, connection, messages }) => {
             renderHeader={() => (
                 <div className="chat-header">
                     <div className="window-title">
-                        <h2>{chatTitle}</h2>
+                        <span className="chat-img">{chatTitle}</span>
+                        
                     </div>
                     <div className="window-controls">
                         <button className="minimize" onClick={handleMinimize}></button>
@@ -137,7 +138,6 @@ const ChatComponent = ({ session, connection, messages }) => {
                         </div>
                         <div key={`${message.userId}-${index}`}
                             className={`message-content w-100 ${message.userId === currentUser.userId ? 'bg-secondary' : 'bg-light'}`}>
-                            <div className="message-sender">{message.user}</div>
                             <div className="message-text">{message.text}</div>
                             <div className="message-time">{formatDateTime(message.time)}</div>
                         </div>

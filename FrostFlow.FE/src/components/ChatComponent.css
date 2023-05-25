@@ -78,8 +78,11 @@ html {
 }
 
 .chat-input {
-    padding: 10px;
+    padding: .5rem;
     border-top: 1px solid var(--bs-light);
+    border-bottom-left-radius: .65rem;
+    border-bottom-right-radius: .65rem;
+    background-color: var(--bs-light);
 }
 
     .chat-input input {
@@ -128,3 +131,21 @@ html {
         .scrollbar-container .ps__thumb-y:active {
             background-color: var(--bs-secondary);
         }
+
+
+.chat-img {
+    display: flex;
+    align-items: center;
+    font-size: 1.25rem;
+}
+
+    .chat-img::before {
+        content: ""; 
+        display: inline-block;
+        background-image: url(../../public/chat.png); 
+        background-size: contain; 
+        background-repeat: no-repeat; 
+        width: 2rem; 
+        height: 2rem; 
+        margin-right: .65rem; 
+    }
