@@ -35,6 +35,16 @@ To run the React Messaging Application locally, follow these steps:
 4. Start the development server and run the API server. The API server will be available at `https://localhost:7272`.
 5. Open your web browser and visit: `https://localhost:3000`
 
+## TODO
+
+1. Groups and Channels: Allow users to create and join groups or channels. You could implement private groups where users need an invite or need to request to join, and public groups where anyone can join.
+2. Multimedia Messages: Allow users to send more than just text messages. They could send images, videos, or audio messages.
+3. Real-time Typing Indicators: Show when someone else is typing a message.
+4. Read Receipts: Show when a message has been delivered and read.
+5. Emoji Support: Allow users to send emojis. You could also allow custom emojis.
+6. Message Reactions: Allow users to react to messages with emojis.
+7. Push Notifications: Notify users of new messages even when they're not actively using the chat.
+
 ## License
 
 This project is licensed under the APACHE license. See the [LICENSE.txt](LICENSE.txt) file for more details.
@@ -44,4 +54,3 @@ This project is licensed under the APACHE license. See the [LICENSE.txt](LICENSE
 Contributions to this project are highly appreciated and welcome. Feel free to submit pull requests or raise issues to contribute to the improvement of the application.
 
 *Note: The React Messaging Application is a project focused on exploring the implementation of real-time messaging functionality with React and ASP.NET Core.*
-*Additional Note: Project will be on hiatus from author as I will get more inspiration from other projects*
