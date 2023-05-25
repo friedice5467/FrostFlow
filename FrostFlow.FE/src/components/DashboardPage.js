@@ -3,7 +3,8 @@ import * as signalR from '@microsoft/signalr';
 import { useAuth } from "../helpers/AuthContext";
 import ChatComponent from './ChatComponent';
 import UserSearch from './UserSearchPopup';
-import { Container, Row, Col, Button, Navbar, Dropdown, Accordion, Card, Nav, NavDropdown } from 'react-bootstrap';
+import { Container, Row, Col, Button, Navbar, Dropdown } from 'react-bootstrap';
+import { Accordion, AccordionItem as Item} from '@szhsin/react-accordion';
 import './DashboardPage.css';
 import api from '../helpers/api';
 import LoadingModal from './LoadingModal';
@@ -19,8 +20,18 @@ const DashboardPage = () => {
     const [currentSession, setCurrentSession] = useState(null);
     const [selectedSessionMessages, setSelectedSessionMessages] = useState([]);
     const [collapsed, setCollapsed] = useState(false);
-    const [activeAccordionKey, setActiveAccordionKey] = useState('0');
 
+    const AccordionItem = ({ header, ...rest }) => (
+        <Item
+            {...rest}
+            header={
+                <>
+                    {header}
+                    <img className="chevron-down" src='/chevron-down.svg' alt="Chevron Down" />
+                </>
+            }
+        />
+    );
 
     const toggleSidebar = () => {
         setCollapsed(!collapsed);
@@ -135,16 +146,15 @@ const DashboardPage = () => {
         <>
             {isLoading && <LoadingModal />}
             {error && <ApiExceptionModal error={error} onClose={() => setError(null)} />}
-            <Container fluid className="dashboard-container mx-0 px-0 bg-light">
+            <Container fluid className="dashboard-container mx-0 px-0 h-100 bg-dark">
                 <Row className="mx-0">
                     <Col xs={12} className="px-0">
                         <Navbar bg="dark" variant="dark" expand="lg" className="flex-md-nowrap p-0 shadow">
-                            <Button variant="outline-primary" onClick={toggleSidebar}><span className="navbar-toggler-icon"></span></Button>
-                            <Navbar.Brand href="#home" className="col-sm-3 col-md-2 mr-0 ms-2">My Dashboard</Navbar.Brand>
+                            <Button variant="outline-dark" onClick={toggleSidebar}><span className="navbar-toggler-icon"></span></Button>
+                            <Navbar.Brand href="#home" className="col-sm-3 col-md-2 mr-0 ms-2">App</Navbar.Brand>
                             <Navbar.Collapse id="basic-navbar-nav" className="px-3 d-flex justify-content-end">
                                 <Dropdown>
-                                    <Dropdown.Toggle variant="dark" id="dropdown-basic">
-                                        Profile
+                                    <Dropdown.Toggle variant="dark" className="profile-gravatar" id="dropdown-basic">
                                     </Dropdown.Toggle>
 
                                     <Dropdown.Menu align="right">
@@ -160,23 +170,17 @@ const DashboardPage = () => {
                 <Row className="h-100 mx-0">
                     <Col xs={collapsed ? 0 : 2} md={collapsed ? 0 : 2} className={`${collapsed ? "d-none" : ""} sidebar bg-dark text-white d-flex flex-column align-items-center px-0`}>
                         {(
-                            <Accordion className="w-100">
-                                <Accordion.Item eventKey="0" className="w-100">
-                                    <Accordion.Header className="bg-dark p-0">
-                                        Chats
-                                    </Accordion.Header>
-                                    <Accordion.Body className="flex-column px-0 py-0">
+                            <Accordion className="w-100" transition transitionTimeout={250}>
+                                <AccordionItem header="Chats" className="w-100 ">
                                         {Object.values(activeChats).map((session) => (
                                             <Button
-                                                variant="" className="w-100 bg-dark text-light rounded-0 border-bottom border-primary" key={session.id} onClick={() => handleChatButtonClick(session, session.user)}>
+                                                variant="" className="w-100 rounded-0 " key={session.id} onClick={() => handleChatButtonClick(session, session.user)}>
                                                 {session.user.userName}
                                             </Button>
                                         ))}
-                                    </Accordion.Body>
-                                </Accordion.Item>
+                                </AccordionItem>
                             </Accordion>
                         )}
-
                         {showPopup && (
                             <UserSearch
                                 closePopup={() => setShowPopup(false)}
